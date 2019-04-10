@@ -1,0 +1,25 @@
+@import "variables";
+
+.form-group {
+    > label,
+    > .col-form-label,
+    // for horizontal
+    > .row > .col-form-label {
+        font-weight: bolder;
+
+        &.required:after {
+            content: " *";
+            color: $danger;
+        }
+    }
+
+    // beautify inline checkboxes/radios
+    .form-check-inline {
+        margin-top: 0.4em;
+
+        > .form-check:first-child {
+            padding-left: 0;
+        }
+    }
+
+}
