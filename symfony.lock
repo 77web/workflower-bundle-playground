@@ -53,6 +53,18 @@
     "nikic/php-parser": {
         "version": "v4.1.0"
     },
+    "phpmentors/domain-kata": {
+        "version": "v1.4.0"
+    },
+    "phpmentors/workflower": {
+        "version": "v1.4.0"
+    },
+    "phpmentors/workflower-bundle": {
+        "version": "1.5.x-dev"
+    },
+    "piece/stagehand-fsm": {
+        "version": "v2.6.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -130,6 +142,9 @@
     },
     "symfony/event-dispatcher": {
         "version": "v4.0.2"
+    },
+    "symfony/expression-language": {
+        "version": "v4.2.5"
     },
     "symfony/filesystem": {
         "version": "v4.0.2"
@@ -232,6 +247,30 @@
             "version": "4.0",
             "ref": "cda8b550123383d25827705d05a42acf6819fe4e"
         }
+    },
+    "symfony/security-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "f8a63faa0d9521526499c0a8f403c9964ecb0527"
+        },
+        "files": [
+            "config/packages/security.yaml"
+        ]
+    },
+    "symfony/security-core": {
+        "version": "v4.2.5"
+    },
+    "symfony/security-csrf": {
+        "version": "v4.2.5"
+    },
+    "symfony/security-guard": {
+        "version": "v4.2.5"
+    },
+    "symfony/security-http": {
+        "version": "v4.2.5"
     },
     "symfony/stopwatch": {
         "version": "v4.0.2"
