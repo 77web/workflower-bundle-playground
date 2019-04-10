@@ -29,3 +29,9 @@ services:
 
     Symfony\Contracts\Translation\TranslatorInterface: '@translator'
     Symfony\Component\HttpFoundation\Session\SessionInterface: '@session'
+
+
+    app.loan_request_process_completion_usecase:
+        class: App\Usecase\LoanRequestProcessCompletionUsecase
+        tags:
+            - { name: phpmentors_workflower.process_aware, workflow: LoanRequestProcess, context: app }
