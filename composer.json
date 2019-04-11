@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^1.10",
+        "doctrine/doctrine-migrations-bundle": "^2.0",
         "doctrine/orm": "^2.6",
         "phpmentors/workflower-bundle": "~1.5@dev",
         "sensio/framework-extra-bundle": "^5.1",
