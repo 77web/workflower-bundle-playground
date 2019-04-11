@@ -1,15 +1,30 @@
 <?php
 
 
-namespace App\Workflow;
+namespace App\Entity;
 
-
+use Doctrine\ORM\Mapping as ORM;
 use PHPMentors\Workflower\Persistence\WorkflowSerializableInterface;
 use PHPMentors\Workflower\Process\ProcessContextInterface;
 use PHPMentors\Workflower\Workflow\Workflow;
 
+/**
+ * Class LoanRequestProcess
+ *
+ * @ORM\Entity()
+ * @ORM\Table()
+ * @package App\Workflow
+ */
 class LoanRequestProcess implements ProcessContextInterface, WorkflowSerializableInterface
 {
+    /**
+     * @var integer
+     * @ORM\Column(type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
     /**
      * @var Workflow
      */
@@ -18,19 +33,20 @@ class LoanRequestProcess implements ProcessContextInterface, WorkflowSerializabl
     /**
      * @var string
      *
-     * @Column(type="blob", name="serialized_workflow")
+     * @ORM\Column(type="blob", name="serialized_workflow")
      */
     private $serializedWorkflow;
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=255)
      */
-    private $foo = 'test_foo';
+    private $name;
 
-    /**
-     * @var string
-     */
-    private $bar = 'test_bar';
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * {@inheritdoc}
@@ -38,8 +54,7 @@ class LoanRequestProcess implements ProcessContextInterface, WorkflowSerializabl
     public function getProcessData(): array
     {
         return [
-            'foo' => $this->foo,
-            'bar' => $this->bar,
+            'name' => $this->name,
         ];
     }
 
