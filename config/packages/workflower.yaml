@@ -1,5 +1,0 @@
-phpmentors_workflower:
-  serializer_service: phpmentors_workflower.base64_php_workflow_serializer
-  workflow_contexts:
-    app:
-      definition_dir: "%kernel.root_dir%/../bpmn"
