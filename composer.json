@@ -23,10 +23,12 @@
         "symfony/yaml": "4.2.*"
     },
     "require-dev": {
+        "liip/functional-test-bundle": "~2.0@alpha",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/test-pack": "*",
-        "symfony/thanks": "^1.0"
+        "symfony/thanks": "^1.0",
+        "theofidry/alice-data-fixtures": "^1.1"
     },
     "config": {
         "preferred-install": {
