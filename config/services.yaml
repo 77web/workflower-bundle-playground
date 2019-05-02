@@ -29,5 +29,3 @@ services:
 
     Symfony\Contracts\Translation\TranslatorInterface: '@translator'
     Symfony\Component\HttpFoundation\Session\SessionInterface: '@session'
-
-
