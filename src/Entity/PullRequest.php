@@ -4,6 +4,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PHPMentors\Workflower\Persistence\WorkflowSerializableInterface;
+use PHPMentors\Workflower\Process\ProcessContextInterface;
+use PHPMentors\Workflower\Workflow\Workflow;
 
 /**
  * Class PullRequest
@@ -11,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @package App\Entity
  */
-class PullRequest
+class PullRequest implements ProcessContextInterface, WorkflowSerializableInterface
 {
     /**
      * @var int
@@ -32,6 +35,18 @@ class PullRequest
      * @ORM\Column(type="boolean")
      */
     private $merged = false;
+
+    /**
+     * @var Workflow
+     */
+    private $workflow;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="blob")
+     */
+    private $serializedWorkflow;
 
     /**
      * @return int
@@ -77,5 +92,43 @@ class PullRequest
         $this->merged = $merged;
 
         return $this;
+    }
+
+    public function getProcessData()
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+        ];
+    }
+
+    public function getWorkflow()
+    {
+        return $this->workflow;
+    }
+
+    public function setWorkflow(Workflow $workflow)
+    {
+        $this->workflow = $workflow;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setSerializedWorkflow($workflow)
+    {
+        $this->serializedWorkflow = $workflow;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSerializedWorkflow()
+    {
+        if (is_resource($this->serializedWorkflow)) {
+            return stream_get_contents($this->serializedWorkflow, -1, 0);
+        } else {
+            return $this->serializedWorkflow;
+        }
     }
 }
