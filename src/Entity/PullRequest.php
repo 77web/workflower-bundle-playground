@@ -67,7 +67,7 @@ class PullRequest implements ProcessContextInterface, WorkflowSerializableInterf
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
