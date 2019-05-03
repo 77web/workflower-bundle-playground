@@ -35,3 +35,9 @@ services:
         public: true
         tags:
             - { name: phpmentors_workflower.process_aware, workflow: PullRequestProcess, context: app }
+
+    App\Usecase\ReviewPullRequestUsecase:
+        class: App\Usecase\ReviewPullRequestUsecase
+        public: true
+        tags:
+            - { name: phpmentors_workflower.process_aware, workflow: PullRequestProcess, context: app }
