@@ -5,16 +5,16 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:laneSet>
-      <bpmn:lane id="Lane_1goawcc" name="dev">
+      <bpmn:lane id="Lane_dev" name="dev">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>create-pr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>fix-pr</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="lane_reviewer" name="reviewer">
-        <bpmn:flowNodeRef>IntermediateThrowEvent_1fyzxsf</bpmn:flowNodeRef>
+      <bpmn:lane id="Lane_reviewer" name="reviewer">
         <bpmn:flowNodeRef>review-pr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>merge-check</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>merge-pr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_0fiy5ns</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1">
@@ -29,10 +29,6 @@
     <bpmn:sequenceFlow id="SequenceFlow_1donic1" sourceRef="review-pr" targetRef="merge-check" />
     <bpmn:sequenceFlow id="merge-check-ok" name="ok" sourceRef="merge-check" targetRef="merge-pr" />
     <bpmn:sequenceFlow id="merge-check-ng" name="ng" sourceRef="merge-check" targetRef="fix-pr" />
-    <bpmn:sequenceFlow id="SequenceFlow_0ul3q9h" sourceRef="merge-pr" targetRef="IntermediateThrowEvent_1fyzxsf" />
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_1fyzxsf">
-      <bpmn:incoming>SequenceFlow_0ul3q9h</bpmn:incoming>
-    </bpmn:intermediateThrowEvent>
     <bpmn:task id="fix-pr" name="fix PR">
       <bpmn:incoming>merge-check-ng</bpmn:incoming>
       <bpmn:outgoing>re-review-req</bpmn:outgoing>
@@ -50,8 +46,12 @@
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="merge-pr" name="merge PR">
       <bpmn:incoming>merge-check-ok</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0ul3q9h</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_027p1yv</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_0fiy5ns">
+      <bpmn:incoming>SequenceFlow_027p1yv</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_027p1yv" sourceRef="merge-pr" targetRef="EndEvent_0fiy5ns" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1u3914w">
@@ -64,10 +64,10 @@
           <dc:Bounds x="163" y="166" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1goawcc_di" bpmnElement="Lane_1goawcc">
+      <bpmndi:BPMNShape id="Lane_1goawcc_di" bpmnElement="Lane_dev">
         <dc:Bounds x="153" y="82" width="682" height="125" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_16gwvxw_di" bpmnElement="lane_reviewer">
+      <bpmndi:BPMNShape id="Lane_16gwvxw_di" bpmnElement="Lane_reviewer">
         <dc:Bounds x="153" y="207" width="682" height="282" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_1siiq5j_di" bpmnElement="create-pr">
@@ -114,9 +114,6 @@
           <dc:Bounds x="549.5" y="392" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0xbn4p5_di" bpmnElement="merge-pr">
-        <dc:Bounds x="674.5756345177665" y="351" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_1ppmzwu_di" bpmnElement="fix-pr">
         <dc:Bounds x="577.5756345177665" y="97" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -129,21 +126,6 @@
           <dc:Bounds x="490.5" y="243" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="IntermediateThrowEvent_1fyzxsf_di" bpmnElement="IntermediateThrowEvent_1fyzxsf">
-        <dc:Bounds x="739.5756345177665" y="260" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="712.5756345177665" y="296" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0ul3q9h_di" bpmnElement="SequenceFlow_0ul3q9h">
-        <di:waypoint xsi:type="dc:Point" x="725" y="351" />
-        <di:waypoint xsi:type="dc:Point" x="725" y="324" />
-        <di:waypoint xsi:type="dc:Point" x="758" y="324" />
-        <di:waypoint xsi:type="dc:Point" x="758" y="296" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="588" y="268" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0togtyy_di" bpmnElement="re-review-req">
         <di:waypoint xsi:type="dc:Point" x="578" y="137" />
         <di:waypoint xsi:type="dc:Point" x="476" y="137" />
@@ -151,6 +133,24 @@
         <di:waypoint xsi:type="dc:Point" x="358" y="337" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="431" y="197.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0xbn4p5_di" bpmnElement="merge-pr">
+        <dc:Bounds x="674.5756345177665" y="351" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0fiy5ns_di" bpmnElement="EndEvent_0fiy5ns">
+        <dc:Bounds x="697" y="265" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="670" y="301" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_027p1yv_di" bpmnElement="SequenceFlow_027p1yv">
+        <di:waypoint xsi:type="dc:Point" x="725" y="351" />
+        <di:waypoint xsi:type="dc:Point" x="725" y="326" />
+        <di:waypoint xsi:type="dc:Point" x="715" y="326" />
+        <di:waypoint xsi:type="dc:Point" x="715" y="301" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="675" y="316" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
