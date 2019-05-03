@@ -27,8 +27,12 @@
     <bpmn:sequenceFlow id="SequenceFlow_1t1tfym" sourceRef="StartEvent_1" targetRef="create-pr" />
     <bpmn:sequenceFlow id="request-review" name="request a review" sourceRef="create-pr" targetRef="review-pr" />
     <bpmn:sequenceFlow id="SequenceFlow_1donic1" sourceRef="review-pr" targetRef="merge-check" />
-    <bpmn:sequenceFlow id="merge-check-ok" name="ok" sourceRef="merge-check" targetRef="merge-pr" />
-    <bpmn:sequenceFlow id="merge-check-ng" name="ng" sourceRef="merge-check" targetRef="fix-pr" />
+    <bpmn:sequenceFlow id="merge-check-ok" name="ok" sourceRef="merge-check" targetRef="merge-pr">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">approved == true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="merge-check-ng" name="ng" sourceRef="merge-check" targetRef="fix-pr">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">approved == false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:task id="fix-pr" name="fix PR">
       <bpmn:incoming>merge-check-ng</bpmn:incoming>
       <bpmn:outgoing>re-review-req</bpmn:outgoing>
