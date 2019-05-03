@@ -34,6 +34,12 @@ class PullRequest implements ProcessContextInterface, WorkflowSerializableInterf
      * @var bool
      * @ORM\Column(type="boolean")
      */
+    private $approved = false;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
     private $merged = false;
 
     /**
@@ -99,6 +105,7 @@ class PullRequest implements ProcessContextInterface, WorkflowSerializableInterf
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'approved' => $this->approved,
         ];
     }
 
@@ -130,5 +137,24 @@ class PullRequest implements ProcessContextInterface, WorkflowSerializableInterf
         } else {
             return $this->serializedWorkflow;
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApproved(): bool
+    {
+        return $this->approved;
+    }
+
+    /**
+     * @param bool $approved
+     * @return PullRequest
+     */
+    public function setApproved(bool $approved): PullRequest
+    {
+        $this->approved = $approved;
+
+        return $this;
     }
 }
