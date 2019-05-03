@@ -3,6 +3,12 @@
   <bpmn:collaboration id="Collaboration_1u3914w">
     <bpmn:participant id="Participant_04orbzh" processRef="Process_1" />
   </bpmn:collaboration>
+  <bpmn:message id="dummy" />
+  <bpmn:interface id="Interface_1" name="Interface 1">
+    <bpmn:operation id="pull_request_process.merge_pr" name="pull_request_process.merge_pr">
+      <bpmn:inMessageRef>dummy</bpmn:inMessageRef>
+    </bpmn:operation>
+  </bpmn:interface>
   <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:laneSet>
       <bpmn:lane id="Lane_dev" name="dev">
@@ -48,7 +54,7 @@
       <bpmn:outgoing>merge-check-ok</bpmn:outgoing>
       <bpmn:outgoing>merge-check-ng</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="merge-pr" name="merge PR">
+    <bpmn:serviceTask id="merge-pr" name="merge PR" operationRef="pull_request_process.merge_pr">
       <bpmn:incoming>merge-check-ok</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_027p1yv</bpmn:outgoing>
     </bpmn:serviceTask>
