@@ -35,4 +35,24 @@ class ReviewPullRequestUsecaseTest extends WebTestCase
         $req1 = $em->find(PullRequest::class, 1);
         self::assertNotNull($req1);
     }
+
+    public function test_approved()
+    {
+        $container = $this->getContainer();
+        $pullRequest = new PullRequest();
+        $pullRequest->setTitle('dummy');
+        $pullRequest->setApproved(true);
+
+        $createUsecase = $container->get(CreatePullRequestUsecase::class);
+        $createUsecase->run($pullRequest);
+
+        $reviewUsecase = $container->get(ReviewPullRequestUsecase::class);
+        $reviewUsecase->run($pullRequest);
+
+        $em = $container->get('doctrine')->getManager();
+        $em->clear();
+        /** @var PullRequest $req1 */
+        $req1 = $em->find(PullRequest::class, 1);
+        self::assertNotNull($req1);
+    }
 }

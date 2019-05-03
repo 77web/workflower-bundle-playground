@@ -41,3 +41,7 @@ services:
         public: true
         tags:
             - { name: phpmentors_workflower.process_aware, workflow: PullRequestProcess, context: app }
+
+    pull_request_process.merge_pr:
+        class: App\OperationRunner\MergePullRequestOperationRunner
+        public: true
