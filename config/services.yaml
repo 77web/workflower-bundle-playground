@@ -29,3 +29,9 @@ services:
 
     Symfony\Contracts\Translation\TranslatorInterface: '@translator'
     Symfony\Component\HttpFoundation\Session\SessionInterface: '@session'
+
+    App\Usecase\CreatePullRequestUsecase:
+        class: App\Usecase\CreatePullRequestUsecase
+        public: true
+        tags:
+            - { name: phpmentors_workflower.process_aware, workflow: PullRequestProcess, context: app }

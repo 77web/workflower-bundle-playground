@@ -34,7 +34,7 @@ class Reviewer implements ParticipantInterface
 
     public function hasRole($role)
     {
-        return $role === 'reviewer';
+        return $role === 'Lane_reviewer';
     }
 
     public function setResource(ResourceInterface $resource)

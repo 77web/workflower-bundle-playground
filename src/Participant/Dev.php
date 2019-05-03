@@ -34,7 +34,7 @@ class Dev implements ParticipantInterface
 
     public function hasRole($role)
     {
-        return $role === 'dev';
+        return $role === 'Lane_dev';
     }
 
     public function setResource(ResourceInterface $resource)
