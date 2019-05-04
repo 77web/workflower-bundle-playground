@@ -1,0 +1,8 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <form action="{{ path("create_pr") }}" method="post">
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Create PullRequest</button>
+    </form>
+{% endblock %}

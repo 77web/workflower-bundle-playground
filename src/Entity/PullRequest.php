@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use PHPMentors\Workflower\Persistence\WorkflowSerializableInterface;
 use PHPMentors\Workflower\Process\ProcessContextInterface;
 use PHPMentors\Workflower\Workflow\Workflow;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class PullRequest
@@ -27,6 +28,7 @@ class PullRequest implements ProcessContextInterface, WorkflowSerializableInterf
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -65,7 +67,7 @@ class PullRequest implements ProcessContextInterface, WorkflowSerializableInterf
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
