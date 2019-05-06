@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\PullRequest;
+use App\Form\ReviewPullRequestType;
 use App\Repository\PullRequestRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -15,15 +17,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
+    /**
      * @var PullRequestRepository
      */
     private $repository;
 
     /**
+     * @param FormFactoryInterface $formFactory
      * @param PullRequestRepository $repository
      */
-    public function __construct(PullRequestRepository $repository)
+    public function __construct(FormFactoryInterface $formFactory, PullRequestRepository $repository)
     {
+        $this->formFactory = $formFactory;
         $this->repository = $repository;
     }
 
@@ -47,8 +56,13 @@ class HomeController extends AbstractController
      */
     public function show(PullRequest $pullRequest)
     {
+        $form = $this->formFactory->create(ReviewPullRequestType::class, $pullRequest, [
+            'method' => 'POST',
+        ]);
+
         return [
             'pull_req' => $pullRequest,
+            'review_form' => $form->createView(),
         ];
     }
 }

@@ -38,6 +38,7 @@ class HomeControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertTrue($response->isOk(), $response->getStatusCode());
         $this->assertEquals(1, $crawler->filter('h2:contains("req1")')->count());
+        $this->assertEquals(1, $crawler->filter('#pull-req-review')->count());
     }
 
     public function test_show_notfound()
