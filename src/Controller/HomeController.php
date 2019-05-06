@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\PullRequest;
 use App\Repository\PullRequestRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +35,20 @@ class HomeController extends AbstractController
     {
         return [
             'pull_reqs' => $this->repository->findBy([], ['id' => 'desc']),
+        ];
+    }
+
+    /**
+     * @Route("/pull/{id}", name="pull_req_show")
+     * @ParamConverter(name="pullRequest", class="App\Entity\PullRequest")
+     * @Template()
+     * @param PullRequest $pullRequest
+     * @return array
+     */
+    public function show(PullRequest $pullRequest)
+    {
+        return [
+            'pull_req' => $pullRequest,
         ];
     }
 }

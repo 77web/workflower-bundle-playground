@@ -5,7 +5,7 @@
 
     <ul id="pull-req-list">
     {% for pull_req in pull_reqs %}
-        <li>{{ pull_req.title }}</li>
+        <li><a href="{{ path("home_pull_req_show", {id: pull_req.id}) }}">{{ pull_req.title }}</a></li>
     {% endfor %}
     </ul>
 {% endblock %}
