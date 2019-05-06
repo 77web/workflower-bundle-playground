@@ -3,5 +3,9 @@
 {% block content %}
     {% include 'widgets/tabs.html.twig' %}
 
-    <p>Hello, Symfony Micro Skeleton.</p>
+    <ul id="pull-req-list">
+    {% for pull_req in pull_reqs %}
+        <li>{{ pull_req.title }}</li>
+    {% endfor %}
+    </ul>
 {% endblock %}
