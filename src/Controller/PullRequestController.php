@@ -4,13 +4,20 @@
 namespace App\Controller;
 
 
+use App\Entity\PullRequest;
 use App\Form\PullRequestType;
+use App\Form\ReviewPullRequestType;
 use App\Usecase\CreatePullRequestUsecase;
+use App\Usecase\ReviewPullRequestUsecase;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 
 class PullRequestController
 {
@@ -20,18 +27,39 @@ class PullRequestController
     private $formFactory;
 
     /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
      * @var CreatePullRequestUsecase
      */
     private $createPullRequestUsecase;
 
     /**
-     * @param FormFactoryInterface $formFactory
-     * @param CreatePullRequestUsecase $createPullRequestUsecase
+     * @var ReviewPullRequestUsecase
      */
-    public function __construct(FormFactoryInterface $formFactory, CreatePullRequestUsecase $createPullRequestUsecase)
+    private $reviewPullRequestUsecase;
+
+    /**
+     * @param FormFactoryInterface $formFactory
+     * @param RouterInterface $router
+     * @param SessionInterface $session
+     * @param CreatePullRequestUsecase $createPullRequestUsecase
+     * @param ReviewPullRequestUsecase $reviewPullRequestUsecase
+     */
+    public function __construct(FormFactoryInterface $formFactory, RouterInterface $router, SessionInterface $session, CreatePullRequestUsecase $createPullRequestUsecase, ReviewPullRequestUsecase $reviewPullRequestUsecase)
     {
         $this->formFactory = $formFactory;
+        $this->router = $router;
+        $this->session = $session;
         $this->createPullRequestUsecase = $createPullRequestUsecase;
+        $this->reviewPullRequestUsecase = $reviewPullRequestUsecase;
     }
 
     /**
@@ -55,5 +83,27 @@ class PullRequestController
         return [
             'form' => $form->createView(),
         ];
+    }
+
+    /**
+     * @Method("POST")
+     * @Route("/pull/{id}/review", name="pull_req_review")
+     * @ParamConverter(name="pullRequest", class="App\Entity\PullRequest")
+     * @param Request $request
+     * @param PullRequest $pullRequest
+     * @return RedirectResponse
+     */
+    public function reviewAction(Request $request, PullRequest $pullRequest)
+    {
+        $form = $this->formFactory->create(ReviewPullRequestType::class, $pullRequest);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->reviewPullRequestUsecase->run($pullRequest);
+
+            $this->session->getFlashbag()->set('notice', 'Review sent.');
+        }
+
+        return new RedirectResponse($this->router->generate("home_pull_req_show", ['id' => $pullRequest->getId()]));
     }
 }
