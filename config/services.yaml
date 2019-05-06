@@ -16,7 +16,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests}'
+        exclude: '../src/{Entity,Migrations,Repository,Tests}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -29,6 +29,12 @@ services:
 
     Symfony\Contracts\Translation\TranslatorInterface: '@translator'
     Symfony\Component\HttpFoundation\Session\SessionInterface: '@session'
+
+    App\Repository\PullRequestRepository:
+        class: App\Repository\PullRequestRepository
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments:
+            - "App\\Entity\\PullRequest"
 
     App\Usecase\CreatePullRequestUsecase:
         class: App\Usecase\CreatePullRequestUsecase

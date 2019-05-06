@@ -1,0 +1,4 @@
+App\Entity\PullRequest:
+  req_{1..2}:
+    title: "req<current()>"
+    serializedWorkflow: "{}"
