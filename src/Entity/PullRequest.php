@@ -12,7 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class PullRequest
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\PullRequestRepository")
+ * @ORM\Table
  * @package App\Entity
  */
 class PullRequest implements ProcessContextInterface, WorkflowSerializableInterface
