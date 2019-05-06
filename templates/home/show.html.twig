@@ -5,6 +5,10 @@
 
     <h2>{{ pull_req.title }}</h2>
 
+    {% if pull_req.workflow.currentFlowObject %}
+    <div>Status:<span>{{ pull_req.workflow.currentFlowObject.id }}</span></div>
+    {% endif %}
+
     {% if pull_req.merged %}
         <strong>merged!</strong>
     {% endif %}
