@@ -109,6 +109,7 @@ class PullRequest implements ProcessContextInterface, WorkflowSerializableInterf
             'id' => $this->id,
             'title' => $this->title,
             'approved' => $this->approved,
+            'data' => $this,
         ];
     }
 
