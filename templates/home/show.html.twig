@@ -10,7 +10,7 @@
     {% else %}
         <strong>not approved yet</strong>
 
-        <form action="#" method="POST" id="pull-req-review">
+        <form action="{{ path("pull_req_review", {id: pull_req.id}) }}" method="POST" id="pull-req-review">
             {{ form_widget(review_form) }}
         </form>
     {% endif %}
