@@ -42,6 +42,7 @@ class ReviewTest extends WebTestCase
 
         $req1 = $this->em->find(PullRequest::class, 1);
         $this->assertTrue($req1->isApproved());
+        $this->assertTrue($req1->isMerged());
     }
 
     public function test_disapprove()
