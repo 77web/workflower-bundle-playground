@@ -5,6 +5,9 @@
 
     <h2>{{ pull_req.title }}</h2>
 
+    {% if pull_req.merged %}
+        <strong>merged!</strong>
+    {% endif %}
     {% if pull_req.approved %}
         <strong>approved</strong>
     {% else %}
