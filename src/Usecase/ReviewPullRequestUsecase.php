@@ -47,6 +47,9 @@ class ReviewPullRequestUsecase implements ProcessAwareInterface
         $this->process->startWorkItem($workItem);
         $this->process->completeWorkItem($workItem);
 
+        // force doctrine to update serializedWorkflow
+        $pullRequest->setSerializedWorkflow(null);
+
         $this->em->persist($pullRequest);
         $this->em->flush();
     }
