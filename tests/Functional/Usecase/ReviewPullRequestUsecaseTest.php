@@ -34,6 +34,7 @@ class ReviewPullRequestUsecaseTest extends WebTestCase
         /** @var PullRequest $req1 */
         $req1 = $em->find(PullRequest::class, 1);
         self::assertNotNull($req1);
+        self::assertEquals('fix-pr', $req1->getWorkflow()->getCurrentFlowObject()->getId());
     }
 
     public function test_approved()

@@ -8,6 +8,7 @@ use App\Entity\PullRequest;
 use App\Form\PullRequestType;
 use App\Form\ReviewPullRequestType;
 use App\Usecase\CreatePullRequestUsecase;
+use App\Usecase\FixPullRequestUsecase;
 use App\Usecase\ReviewPullRequestUsecase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -47,19 +48,26 @@ class PullRequestController
     private $reviewPullRequestUsecase;
 
     /**
+     * @var FixPullRequestUsecase
+     */
+    private $fixPullRequestUsecase;
+
+    /**
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
      * @param SessionInterface $session
      * @param CreatePullRequestUsecase $createPullRequestUsecase
      * @param ReviewPullRequestUsecase $reviewPullRequestUsecase
+     * @param FixPullRequestUsecase $fixPullRequestUsecase
      */
-    public function __construct(FormFactoryInterface $formFactory, RouterInterface $router, SessionInterface $session, CreatePullRequestUsecase $createPullRequestUsecase, ReviewPullRequestUsecase $reviewPullRequestUsecase)
+    public function __construct(FormFactoryInterface $formFactory, RouterInterface $router, SessionInterface $session, CreatePullRequestUsecase $createPullRequestUsecase, ReviewPullRequestUsecase $reviewPullRequestUsecase, FixPullRequestUsecase $fixPullRequestUsecase)
     {
         $this->formFactory = $formFactory;
         $this->router = $router;
         $this->session = $session;
         $this->createPullRequestUsecase = $createPullRequestUsecase;
         $this->reviewPullRequestUsecase = $reviewPullRequestUsecase;
+        $this->fixPullRequestUsecase = $fixPullRequestUsecase;
     }
 
     /**
@@ -105,5 +113,30 @@ class PullRequestController
         }
 
         return new RedirectResponse($this->router->generate("home_pull_req_show", ['id' => $pullRequest->getId()]));
+    }
+
+    /**
+     * @Route("/pull/{id}/fix", name="pull_req_fix")
+     * @ParamConverter(name="pullRequest", class="App\Entity\PullRequest")
+     * @Template
+     * @param Request $request
+     * @param PullRequest $pullRequest
+     * @return array|RedirectResponse
+     */
+    public function fixAction(Request $request, PullRequest $pullRequest)
+    {
+        $form = $this->formFactory->create(PullRequestType::class, $pullRequest);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->fixPullRequestUsecase->run($pullRequest);
+
+            return new RedirectResponse($this->router->generate("home_pull_req_show", ['id' => $pullRequest->getId()]));
+        }
+
+        return [
+            'pull_req' => $pullRequest,
+            'form' => $form->createView(),
+        ];
     }
 }
