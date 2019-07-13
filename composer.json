@@ -7,24 +7,24 @@
         "ext-iconv": "*",
         "phpmentors/workflower-bundle": "~1.5@dev",
         "sensio/framework-extra-bundle": "^5.1",
-        "symfony/asset": "4.2.*",
-        "symfony/dotenv": "4.2.*",
+        "symfony/asset": "4.3.*",
+        "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.1",
-        "symfony/form": "4.2.*",
-        "symfony/framework-bundle": "4.2.*",
+        "symfony/form": "4.3.*",
+        "symfony/framework-bundle": "4.3.*",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "^1.0",
-        "symfony/templating": "4.2.*",
-        "symfony/translation": "4.2.*",
-        "symfony/twig-bundle": "4.2.*",
-        "symfony/validator": "4.2.*",
-        "symfony/web-link": "4.2.*",
-        "symfony/web-server-bundle": "4.2.*",
+        "symfony/templating": "4.3.*",
+        "symfony/translation": "4.3.*",
+        "symfony/twig-bundle": "4.3.*",
+        "symfony/validator": "4.3.*",
+        "symfony/web-link": "4.3.*",
+        "symfony/web-server-bundle": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.0",
-        "symfony/yaml": "4.2.*"
+        "symfony/yaml": "4.3.*"
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.1",
+        "doctrine/doctrine-fixtures-bundle": "~3.1",
         "liip/functional-test-bundle": "~2.0@alpha",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
@@ -80,7 +80,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "4.2.*"
+            "require": "4.3.*"
         },
         "branch-alias": {
             "dev-master": "1.0.x-dev"
